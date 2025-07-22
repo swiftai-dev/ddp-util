@@ -9,3 +9,6 @@ gcloud config set project $GOOGLE_PROJECT_ID
 
 # install ray and dependencies
 pip install -U "ray[default]" google-cloud-compute
+
+# run cluster
+ray up cluster_config.yaml --yes
