@@ -1,0 +1,63 @@
+cluster_name: ray-gce-cluster
+max_workers: 2
+upscaling_speed: 1.0
+
+provider:
+  type: gcp
+  region: us-central1
+  availability_zone: us-central1-a
+  project_id: be-loo-prototyping
+
+auth:
+  ssh_user: ubuntu
+
+# docker:
+#     image: "rayproject/ray:latest"
+#     container_name: "ray_container"
+
+available_node_types:
+  head_node_type:
+    node_config:
+      machineType: n1-standard-1
+      # image: projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240702
+      disks:
+        - boot: true
+          # Specifies the source image for the boot disk.
+          # This is a common image for Ubuntu 20.04 LTS (Focal Fossa).
+          # You can choose other images like CentOS, Debian, etc.
+          # Find more options here: https://cloud.google.com/compute/docs/images
+          initializeParams:
+            sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20250712
+            diskSizeGb: 100 # Adjust size as needed, 100GB is a common starting point
+            #diskType: pd-ssd
+            type: PERSISTENT
+      serviceAccounts:
+        - email: 647180355042-compute@developer.gserviceaccount.com
+    resources: {} # Specify resources if needed
+
+  worker_node_type:
+    node_config:
+      machineType: n1-standard-1
+      # image: projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240702
+      disks:
+        - boot: true
+          # Specifies the source image for the boot disk.
+          # This is a common image for Ubuntu 20.04 LTS (Focal Fossa).
+          # You can choose other images like CentOS, Debian, etc.
+          # Find more options here: https://cloud.google.com/compute/docs/images
+          initializeParams:
+            sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20250712
+            diskSizeGb: 100 # Adjust size as needed, 100GB is a common starting point
+            #diskType: pd-ssd
+            type: PERSISTENT
+      serviceAccounts:
+        - email: 647180355042-compute@developer.gserviceaccount.com
+      scheduling:
+        automatic_restart: true
+        on_host_maintenance: MIGRATE
+        preemptible: true # Use spot instances
+    min_workers: 0
+    max_workers: 2
+    resources: {} # Specify resources if needed
+
+head_node_type: head_node_type
