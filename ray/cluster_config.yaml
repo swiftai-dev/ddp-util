@@ -61,3 +61,9 @@ available_node_types:
     resources: {} # Specify resources if needed
 
 head_node_type: head_node_type
+
+setup_commands:
+  - echo "Starting setup commands for Ray cluster VMs..."
+  # --- ADD THESE LINES ---
+  - sudo apt-get update -y # Always update package lists first
+  - sudo apt-get install -y python3-pip # Install pip for Python 3
