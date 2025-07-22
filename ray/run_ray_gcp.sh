@@ -6,3 +6,6 @@ export GOOGLE_PROJECT_ID=be-loo-prototyping
 gcloud init
 
 gcloud config set project $GOOGLE_PROJECT_ID
+
+# install ray and dependencies
+pip install -U "ray[default]" google-cloud-compute
