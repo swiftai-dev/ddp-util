@@ -22,13 +22,14 @@ available_node_types:
       # image: projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240702
       disks:
         - boot: true
+          autoDelete: true
           # Specifies the source image for the boot disk.
           # This is a common image for Ubuntu 20.04 LTS (Focal Fossa).
           # You can choose other images like CentOS, Debian, etc.
           # Find more options here: https://cloud.google.com/compute/docs/images
           initializeParams:
             sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20250712
-            diskSizeGb: 100 # Adjust size as needed, 100GB is a common starting point
+            diskSizeGb: 30 # Adjust size as needed, 100GB is a common starting point
             #diskType: pd-ssd
             type: PERSISTENT
       serviceAccounts:
@@ -41,13 +42,14 @@ available_node_types:
       # image: projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240702
       disks:
         - boot: true
+          autoDelete: true
           # Specifies the source image for the boot disk.
           # This is a common image for Ubuntu 20.04 LTS (Focal Fossa).
           # You can choose other images like CentOS, Debian, etc.
           # Find more options here: https://cloud.google.com/compute/docs/images
           initializeParams:
             sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20250712
-            diskSizeGb: 100 # Adjust size as needed, 100GB is a common starting point
+            diskSizeGb: 30 # Adjust size as needed, 100GB is a common starting point
             #diskType: pd-ssd
             type: PERSISTENT
       serviceAccounts:
@@ -67,3 +69,4 @@ setup_commands:
   # --- ADD THESE LINES ---
   - sudo apt-get update -y # Always update package lists first
   - sudo apt-get install -y python3-pip # Install pip for Python 3
+  - pip install -U "ray[default]"
