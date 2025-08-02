@@ -1,0 +1,13 @@
+[project]
+name = "rayutil"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.10.12"
+dependencies = [
+    "pandas",
+    "pyarrow",
+    "ray[default]>=2.0.0",
+    "google-cloud-compute",
+    "google-api-python-client",
+]
