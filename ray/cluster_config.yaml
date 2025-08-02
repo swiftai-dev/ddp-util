@@ -18,7 +18,7 @@ auth:
 available_node_types:
   head_node_type:
     node_config:
-      machineType: n1-standard-1
+      machineType: n1-standard-2
       # image: projects/ubuntu-os-cloud/global/images/ubuntu-2004-focal-v20240702
       disks:
         - boot: true
@@ -29,11 +29,15 @@ available_node_types:
           # Find more options here: https://cloud.google.com/compute/docs/images
           initializeParams:
             sourceImage: https://www.googleapis.com/compute/v1/projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20250712
-            diskSizeGb: 30 # Adjust size as needed, 100GB is a common starting point
+            diskSizeGb: 50
             #diskType: pd-ssd
             type: PERSISTENT
       serviceAccounts:
         - email: 647180355042-compute@developer.gserviceaccount.com
+      tags:
+        items:
+          - ray-gce-cluster
+          - ray-cluster
     resources: {} # Specify resources if needed
 
   worker_node_type:
@@ -57,16 +61,22 @@ available_node_types:
       scheduling:
         automatic_restart: true
         on_host_maintenance: MIGRATE
-        preemptible: true # Use spot instances
+        preemptible: false # Use spot instances
+      tags:
+        items:
+          - ray-gce-cluster
+          - ray-cluster
     min_workers: 0
     max_workers: 2
     resources: {} # Specify resources if needed
 
 head_node_type: head_node_type
 
-setup_commands:
-  - echo "Starting setup commands for Ray cluster VMs..."
-  # --- ADD THESE LINES ---
+initialization_commands:
+  - echo "Starting initialization commands for Ray cluster VMs..."
   - sudo apt-get update -y # Always update package lists first
   - sudo apt-get install -y python3-pip # Install pip for Python 3
-  - pip install -U "ray[default]"
+
+setup_commands:
+  - echo "Starting setup commands for Ray cluster VMs..."
+  - pip install -U "ray[default]==2.48.0" pandas pyarrow
