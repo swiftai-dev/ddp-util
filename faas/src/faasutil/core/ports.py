@@ -1,27 +1,30 @@
 """Ports (interfaces) for hexagonal architecture."""
 
 from dataclasses import dataclass
-from typing import Any, Dict, Optional, Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 
 @runtime_checkable
 class DeploymentPort(Protocol):
     """Interface for function deployment operations."""
 
-    def deploy_function(self, function: "ServerlessFunction") -> str:
+    def deploy_function(self, function: "ServerlessFunction") -> str:  # noqa: F821
         """Deploy a serverless function.
+
         Returns deployment ID.
         """
         ...
 
-    def update_function(self, function: "ServerlessFunction") -> str:
+    def update_function(self, function: "ServerlessFunction") -> str:  # noqa: F821
         """Update an existing function.
+
         Returns update ID.
         """
         ...
 
     def delete_function(self, function_name: str) -> bool:
         """Delete a function.
+
         Returns success status.
         """
         ...
@@ -33,6 +36,7 @@ class InvocationPort(Protocol):
 
     def invoke_function(self, function_name: str, payload: dict) -> dict:
         """Invoke a function with given payload.
+
         Returns function response.
         """
         ...
@@ -42,14 +46,16 @@ class InvocationPort(Protocol):
 class MonitoringPort(Protocol):
     """Interface for monitoring operations."""
 
-    def get_logs(self, function_name: str, **filters) -> list[dict]:
+    def get_logs(self, function_name: str, **filters: dict[str, Any]) -> list[dict]:
         """Get function logs.
+
         Returns list of log entries.
         """
         ...
 
-    def get_metrics(self, function_name: str, **filters) -> dict:
+    def get_metrics(self, function_name: str, **filters: dict[str, Any]) -> dict:
         """Get function metrics.
+
         Returns metrics data.
         """
         ...
@@ -62,4 +68,4 @@ class ProviderConfig:
     name: str
     credentials: dict
     region: str
-    additional_config: Optional[Dict[str, Any]] = None
+    additional_config: dict[str, Any] | None = None
