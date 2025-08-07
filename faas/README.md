@@ -61,6 +61,24 @@ The package follows hexagonal architecture principles:
 2. **Ports**: Define the interfaces for external interactions
 3. **Adapters**: Implement the ports for specific providers
 
+## Running Tests
+
+### Unit Tests
+
+```bash
+pytest tests/
+```
+
+### Integration Tests
+
+Integration tests require GCP credentials:
+
+```bash
+export GCP_PROJECT_ID="your-project-id"
+export GCP_REGION="us-central1"  # optional
+pytest tests/integration/ -m integration
+```
+
 ## Contributing
 
 To add support for a new cloud provider:
@@ -68,6 +86,8 @@ To add support for a new cloud provider:
 1. Implement the DeploymentPort and InvocationPort interfaces
 2. Create a provider factory class
 3. Add tests for your implementation
+   - Unit tests mocking the provider APIs
+   - Integration tests (optional but recommended)
 
 ## Next Steps
 
