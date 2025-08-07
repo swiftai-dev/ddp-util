@@ -1,0 +1,12 @@
+[project]
+name = "faasutil"
+version = "0.1.0"
+description = "Google Cloud Functions utility package"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "functions-framework",
+    "google-cloud-functions",
+    "pytest",
+    "pytest-asyncio",
+]
