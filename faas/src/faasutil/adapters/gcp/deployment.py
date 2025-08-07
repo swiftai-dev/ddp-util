@@ -5,8 +5,8 @@ from typing import Optional
 from google.api_core.exceptions import GoogleAPICallError
 from google.cloud import functions_v2
 
-from ..core.domain.function import ServerlessFunction
-from ..core.ports import DeploymentPort
+from faasutil.core.domain.function import ServerlessFunction
+from faasutil.core.ports import DeploymentPort
 
 
 class GCPDeploymentAdapter(DeploymentPort):
@@ -19,9 +19,7 @@ class GCPDeploymentAdapter(DeploymentPort):
     def deploy_function(self, function: ServerlessFunction) -> str:
         """Deploy a function to Google Cloud Functions."""
         try:
-            operation = self.client.create_function(
-                parent=self.parent, function=self._build_gcp_function(function)
-            )
+            operation = self.client.create_function(parent=self.parent, function=self._build_gcp_function(function))
             return operation.operation.name
         except GoogleAPICallError as e:
             raise RuntimeError(f"Failed to deploy function: {e}")
@@ -29,9 +27,7 @@ class GCPDeploymentAdapter(DeploymentPort):
     def update_function(self, function: ServerlessFunction) -> str:
         """Update an existing function in Google Cloud Functions."""
         try:
-            operation = self.client.update_function(
-                function=self._build_gcp_function(function)
-            )
+            operation = self.client.update_function(function=self._build_gcp_function(function))
             return operation.operation.name
         except GoogleAPICallError as e:
             raise RuntimeError(f"Failed to update function: {e}")
@@ -44,9 +40,7 @@ class GCPDeploymentAdapter(DeploymentPort):
         except GoogleAPICallError:
             return False
 
-    def _build_gcp_function(
-        self, function: ServerlessFunction
-    ) -> functions_v2.Function:
+    def _build_gcp_function(self, function: ServerlessFunction) -> functions_v2.Function:
         """Build GCP Function object from our domain model."""
         return functions_v2.Function(
             name=f"{self.parent}/functions/{function.name}",
