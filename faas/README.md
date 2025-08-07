@@ -68,3 +68,8 @@ To add support for a new cloud provider:
 1. Implement the DeploymentPort and InvocationPort interfaces
 2. Create a provider factory class
 3. Add tests for your implementation
+
+## Next Steps
+
+1. Test with Pulumi
+2. Test with Ray
