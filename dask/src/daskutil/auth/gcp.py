@@ -1,6 +1,6 @@
 """GCP authentication module for Dask utilities."""
 
-from typing import Any, Optional, Tuple
+from typing import Any
 
 from google.auth import default
 from google.auth.exceptions import DefaultCredentialsError
@@ -9,15 +9,16 @@ from google.auth.exceptions import DefaultCredentialsError
 class GCPAuth:
     """Handles GCP authentication with sensible defaults."""
 
-    def __init__(self, project_id: Optional[str] = None):
+    def __init__(self, project_id: str | None = None) -> None:
         """Initialize with optional project ID.
 
         Args:
             project_id: GCP project ID. If None, will attempt to detect from environment.
+
         """
         self.project_id = project_id
 
-    def get_credentials(self) -> Tuple[Any, Optional[str]]:
+    def get_credentials(self) -> tuple[Any, str | None]:
         """Get GCP credentials and resolved project ID.
 
         Returns:
@@ -25,6 +26,7 @@ class GCPAuth:
 
         Raises:
             DefaultCredentialsError: If no credentials could be found
+
         """
         try:
             credentials, project = default()
