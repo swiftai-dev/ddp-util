@@ -7,11 +7,45 @@ authors = [
     { name = "Ayat Aboalnaga", email = "ayat.aboalnaga@gmail.com" }
 ]
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "dask[complete]>=2023.0.0",
+    "distributed>=2023.0.0",
+    "dask-cloudprovider[gcp]>=2023.0.0",
+    "coiled>=0.0.0",
+    "google-cloud-storage>=2.0.0",
+    "google-auth>=2.0.0"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "black>=23.0.0",
+    "ruff>=0.0.0"
+]
 
 [project.scripts]
-dask = "dask:main"
+daskutil = "daskutil:main"
 
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "B", "I", "N", "UP", "ANN", "ARG", "C4", "DTZ", "EM", "ERA", "PD", "PGH", "PIE", "PL", "PT", "PTH", "RET", "RSE", "RUF", "SIM", "SLF", "TCH", "TID", "TRY", "S", "D"]
+ignore = ["EM101", "S101"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["D"]
+"tests/**.py" = ["D100"]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
+
+[tool.mypy]
+plugins = "pydantic.mypy"
+exclude = [
+    "build/"
+]
